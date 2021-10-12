@@ -11,7 +11,7 @@ img {
   background: url("./img/hostel.jpg") no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: calc(100vh - 78px);
   margin-top: -24px;
   margin-bottom: -50px;
 }

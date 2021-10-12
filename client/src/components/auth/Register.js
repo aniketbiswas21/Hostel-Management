@@ -13,7 +13,10 @@ class Register extends Component {
       email: "",
       password: "",
       password2: "",
-      errors: {}
+      phoneno: "",
+      hostel: "",
+      role: "",
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -42,8 +45,11 @@ class Register extends Component {
     const newUser = {
       name: this.state.name,
       email: this.state.email,
+      phoneno: this.state.phoneno,
+      hostel: this.state.hostel,
       password: this.state.password,
-      password2: this.state.password2
+      password2: this.state.password2,
+      role: this.state.role,
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -64,9 +70,9 @@ class Register extends Component {
                   <input
                     type="text"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.name
+                      "is-invalid": errors.name,
                     })}
-                    placeholder="User Name"
+                    placeholder="Full Name"
                     name="name"
                     value={this.state.name}
                     onChange={this.onChange}
@@ -79,7 +85,7 @@ class Register extends Component {
                   <input
                     type="email"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.email
+                      "is-invalid": errors.email,
                     })}
                     placeholder="Email Address"
                     name="email"
@@ -92,9 +98,43 @@ class Register extends Component {
                 </div>
                 <div className="form-group">
                   <input
+                    type="text"
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.phoneno,
+                    })}
+                    placeholder="Phone Number"
+                    name="phoneno"
+                    value={this.state.phoneno}
+                    onChange={this.onChange}
+                  />
+                  {errors.phoneno && (
+                    <div className="invalid-feedback">{errors.phoneno}</div>
+                  )}
+                </div>
+                <div className="form-group">
+                  <select
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.hostel,
+                    })}
+                    placeholder="Hostel"
+                    name="hostel"
+                    value={this.state.hostel}
+                    onChange={this.onChange}
+                  >
+                    <option value="">Hostel</option>
+                    <option value="Hostel O">Hostel O</option>
+                    <option value="Hostel J">Hostel J</option>
+                    <option value="Hostel N">Hostel N</option>
+                  </select>
+                  {errors.hostel && (
+                    <div className="invalid-feedback">{errors.phoneno}</div>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password
+                      "is-invalid": errors.password,
                     })}
                     placeholder="Password"
                     name="password"
@@ -109,7 +149,7 @@ class Register extends Component {
                   <input
                     type="password"
                     className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password2
+                      "is-invalid": errors.password2,
                     })}
                     placeholder="Confirm Password"
                     name="password2"
@@ -118,6 +158,23 @@ class Register extends Component {
                   />
                   {errors.password && (
                     <div className="invalid-feedback">{errors.password2}</div>
+                  )}
+                </div>
+                <div className="form-group">
+                  <select
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.role,
+                    })}
+                    placeholder="Role"
+                    name="role"
+                    value={this.state.role}
+                    onChange={this.onChange}
+                  >
+                    <option value="Student">Student</option>
+                    <option value="Staff">Staff</option>
+                  </select>
+                  {errors.role && (
+                    <div className="invalid-feedback">{errors.phoneno}</div>
                   )}
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
@@ -133,15 +190,14 @@ class Register extends Component {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 
-const mapStatesToProps = state => ({
+const mapStatesToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
 });
 
-export default connect(
-  mapStatesToProps,
-  { registerUser }
-)(withRouter(Register));
+export default connect(mapStatesToProps, { registerUser })(
+  withRouter(Register)
+);
