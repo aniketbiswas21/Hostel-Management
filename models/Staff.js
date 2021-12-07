@@ -8,6 +8,9 @@ const StaffSchema = new Schema({
     required: true,
     trim: true,
   },
+  email: {
+    type: String,
+  },
   occupation: {
     type: String,
     required: true,

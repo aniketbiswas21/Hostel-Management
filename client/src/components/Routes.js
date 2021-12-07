@@ -12,6 +12,7 @@ import StudentDetails from "./pages/StudentDetails";
 import Block from "./pages/Block";
 import RoomAction from "./pages/RoomAction";
 import Staff from "./pages/Staff";
+import Complaints from "./pages/Complaints";
 
 class Routes extends Component {
   render() {
@@ -20,12 +21,17 @@ class Routes extends Component {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
-          {/* <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                    <PrivateRoute exact path="/student" component={Student} />
-                    <PrivateRoute exact path="/block" component={Block} />
-                    <PrivateRoute exact path="/room/:id" component={RoomAction} />
-                    <PrivateRoute exact path="/staff" component={Staff} />
-                    <PrivateRoute exact path="/studentdetails/:id" component={StudentDetails} /> */}
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/complaints" component={Complaints} />
+          <PrivateRoute exact path="/student" component={Student} />
+          <PrivateRoute exact path="/block" component={Block} />
+          <PrivateRoute exact path="/room/:id" component={RoomAction} />
+          <PrivateRoute exact path="/staff" component={Staff} />
+          <PrivateRoute
+            exact
+            path="/studentdetails/:id"
+            component={StudentDetails}
+          />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Redirect to="/dashboard" />

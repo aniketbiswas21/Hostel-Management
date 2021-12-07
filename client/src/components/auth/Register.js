@@ -170,6 +170,7 @@ class Register extends Component {
                     value={this.state.role}
                     onChange={this.onChange}
                   >
+                    <option value="">Role</option>
                     <option value="Student">Student</option>
                     <option value="Staff">Staff</option>
                   </select>

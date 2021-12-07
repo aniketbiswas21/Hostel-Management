@@ -5,19 +5,16 @@ const Schema = mongoose.Schema;
 const StudentSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   batch: {
     type: Number,
     required: true,
-    min: 2016,
-    max: 2020
-
   },
   id: {
     type: String,
@@ -28,7 +25,7 @@ const StudentSchema = new Schema({
   },
   block: {
     type: String,
-    enum: ['A', 'B', 'C', 'D'],
+    enum: ["A", "B", "C", "D"],
     trim: true,
     required: true,
   },
@@ -38,9 +35,13 @@ const StudentSchema = new Schema({
   },
   gender: {
     type: String,
-    enum: ['MALE', 'FEMALE'],
+    enum: ["MALE", "FEMALE"],
     required: true,
-  }
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = Student = mongoose.model("student", StudentSchema);

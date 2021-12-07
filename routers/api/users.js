@@ -12,6 +12,7 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/Users");
+const Complaints = require("../../models/Complaints");
 
 // @route GET api/users/test
 // @desc Tests users route
@@ -44,6 +45,8 @@ router.post("/register", (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
+        hostel: req.body.hostel,
+        role: req.body.role,
         avatar,
         password: req.body.password,
       });
@@ -98,6 +101,7 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
+              user,
               token: "Bearer " + token,
             });
           }
@@ -116,13 +120,61 @@ router.post("/login", (req, res) => {
 router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email,
-    });
+  async (req, res) => {
+    if (req.user.id) {
+      const user = await User.findById(req.user.id);
+      return res.json({ ...user });
+    }
+    // res.json({
+    //   id: req.user.id,
+    //   name: req.user.name,
+    //   email: req.user.email,
+    // });
   }
 );
+
+router.get("/user/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  return res.json({ ...user });
+});
+
+router.post("/addComplaint", async (req, res) => {
+  const complaint = await Complaints.create({
+    description: req.body.description,
+    user: req.body.user,
+  });
+
+  if (!complaint) {
+    return res.status(400).json({
+      msg: "Complaint not added",
+    });
+  }
+
+  res.status(200).json({
+    msg: "Complaint added",
+    data: complaint,
+  });
+});
+
+router.get("/complaints", async (req, res) => {
+  const complaints = await Complaints.find();
+  res.status(200).json({ data: complaints });
+});
+
+router.put("/resolve/:id", async (req, res) => {
+  const complaint = await Complaints.findByIdAndUpdate(req.params.id, {
+    resolved: true,
+  });
+
+  if (!complaint) {
+    return res.status(400).json({
+      msg: "Complaint not found",
+    });
+  }
+  res.status(200).json({
+    msg: "Complaint resolved",
+    data: complaint,
+  });
+});
 
 module.exports = router;

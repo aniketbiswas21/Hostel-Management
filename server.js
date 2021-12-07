@@ -7,6 +7,7 @@ const students = require("./routers/api/student");
 const room = require("./routers/api/room");
 const staff = require("./routers/api/staff");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 
@@ -15,13 +16,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db =
+  "mongodb+srv://admin:admin@cluster0.rkvqt.mongodb.net/hostallot?retryWrites=true&w=majority";
 
 // connect to mongoDB
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true  })
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
@@ -44,7 +50,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
